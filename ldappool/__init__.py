@@ -186,7 +186,7 @@ class ConnectionManager(object):
         if self.use_tls:
             try:
                 conn.start_tls_s()
-            except:
+            except Exception:
                 raise BackendError('Could not activate TLS on established '
                                    'connection with %s' % self.uri, backend=conn)
 
