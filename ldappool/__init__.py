@@ -43,7 +43,24 @@ from threading import RLock
 from ldap.ldapobject import ReconnectLDAPObject
 import ldap
 
+try:
+    _handler = logging.NullHandler()
+except:
+    class NullHandler(logging.Handler):
+        """Local copy of python2 >= 2.7 NullHandler class"""
+        def handle(self, record):
+            pass
+
+        def emit(self, record):
+            pass
+
+        def createLock(self):
+            self.lock = None
+
+    _handler = NullHandler()
+
 log = logging.getLogger(__name__)
+log.addHandler(_handler)
 
 class MaxConnectionReachedError(Exception):
     pass
